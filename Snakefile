@@ -1,13 +1,18 @@
 rule train_model:
-    input:
+    params:
+        data_path = '/home/katya.govorkova/challenge_datasets/ligo_datasets/output'
     output:
-        model = directory('output/saved_model')
+        model = 'output/model.pth'
     shell:
-        'python3 scripts/train.py {output.model}'
+        'python3 scripts/train.py {params.data_path} {output.model}'
+
 
 rule evaluate_on_blackbox:
     input:
-        rules.train_model.output.model
+        model = rules.train_model.output.model
+    params:
+        data_path = '/home/katya.govorkova/challenge_datasets/ligo_datasets/output'
     output:
+        submission = 'output/submission.npy'
     shell:
-        'python3 scripts/evaluate.py'
+        'python3 scripts/evaluate.py {params.data_path} {input.model} {output.submission}'
