@@ -48,7 +48,6 @@ def main():
     """
      Run the pipeline
      > Load
-     > Train
      > Predict
      > Save
     """
@@ -62,10 +61,10 @@ def main():
 
     print_pretty('Starting Learning')
     m = Model()
-    # the model should be loaded here !!
+    m.load()
 
     print_pretty('Making Prediction')
-    prediction_prob = m.predict_score(X_test)
+    prediction_prob = m.predict(X_test)
 
     print_pretty('Saving Prediction')
     save_prediction(prediction_prob)
