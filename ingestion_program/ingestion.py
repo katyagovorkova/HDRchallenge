@@ -4,22 +4,29 @@ import numpy as np
 import pandas as pd
 import time
 
-# Input data directory to read training data from
-input_dir = 'input_data/'
 
-# Output data directory to write predictions to
-output_dir = 'output/'
+# Input directory to read test input from
+input_dir = sys.argv[1]
+
+# Output data directory to which to write predictions
+output_dir = sys.argv[2]
+
+program_dir = sys.argv[3]
+submission_dir = sys.argv[4]
 
 sys.path.append(output_dir)
+sys.path.append(program_dir)
+sys.path.append(submission_dir)
 
 
 def get_prediction_data():
 
     # set test data and solution file
-    test_data_file = os.path.join(input_dir, 'test.csv')
+    test_data_file = os.path.join(input_dir, 'ligo_blackbox.npz')
 
     # Read Test data
-    X_test = pd.read_csv(test_data_file)
+    with np.load(test_data_file) as file:
+        X_test = file[file.files[0]]
 
     return X_test
 
