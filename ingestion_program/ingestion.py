@@ -26,7 +26,7 @@ def get_prediction_data():
 
     # Read Test data
     with np.load(test_data_file) as file:
-        X_test = file[file.files[0]]
+        X_test = file['data'].reshape((-1, 200, 2))
 
     return X_test
 
@@ -34,7 +34,7 @@ def save_prediction(prediction_prob):
 
     prediction_file = os.path.join(output_dir, 'test.predictions')
 
-    predictions = prediction_prob[:,1]
+    predictions = prediction_prob
 
     with open(prediction_file, 'w') as f:
         for ind, lbl in enumerate(predictions):

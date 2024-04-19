@@ -162,3 +162,6 @@ cython_debug/
 *.DS_Store
 output/
 .snakemake/
+
+# Input data is too large for github
+input_data/
