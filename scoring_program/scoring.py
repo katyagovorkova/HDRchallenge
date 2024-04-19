@@ -3,11 +3,11 @@ import os
 import json
 import numpy as np
 
-# Directory read predictions and solutions from
-input_dir = 'input_data/'
+# Directory to read labels from
+input_dir = sys.argv[1]
 
 # Directory to output computed score into
-output_dir = 'output/'
+output_dir = sys.argv[2]
 
 
 def read_prediction():
@@ -30,18 +30,16 @@ def read_prediction():
 
 def read_solution():
 
-    solution_file = os.path.join(input_dir, 'test.labels')
+    solution_file = os.path.join(input_dir, 'ligo_blackbox.npz')
 
     # Check if file exists
     if not os.path.isfile(solution_file):
         print('[-] Test solution file not found!')
         return
 
-    f = open(solution_file, "r")
+    with np.load(solution_file) as file:
+        test_labels = file[file.files[1]]
     
-    test_labels = f.read().splitlines()
-    test_labels = np.array(test_labels,dtype=float)
-
     return test_labels
 
 
